@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Commiting</title>
+</head>
+<body>
+<h1>Abstract writing</h1>
+<ul id="commits"></ul>
+
+<script>
+    async function loadCommits() {
+        const repo = "maikadiet/committing";
+        const url = `https://api.github.com/repos/${repo}/commits`;
+
+        try {
+            const res = await fetch(url);
+            const commits = await res.json();
+
+            const ul = document.getElementById("commits");
+            console.log(commits);
+            commits.slice(0, 5).forEach(c => {
+                const li = document.createElement("li");
+                li.textContent = c.commit.message;
+                ul.appendChild(li);
+            });
+        } catch (err) {
+            console.error("Failed to fetch commits:", err);
+        }
+    }
+
+    loadCommits();
+</script>
+</body>
+</html>
